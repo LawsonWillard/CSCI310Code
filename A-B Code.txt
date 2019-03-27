@@ -1,0 +1,62 @@
+import java.util.LinkedList;
+import java.lang.Math;
+import java.util.Scanner;
+
+public class A_Minus_B {
+
+    public int Minus1(Integer bill, Integer paid){
+        Integer difference;
+        int result;
+        difference= paid - bill;
+        LinkedList<Integer> stack = new LinkedList<Integer>();
+
+        while(difference > 0){
+            stack.push(difference%10);
+            difference = difference / 10;
+        }
+
+        while(!stack.isEmpty() && stack.getFirst() == 9){
+            stack.pop();
+        }
+
+        if(stack.isEmpty()){
+            return 0;
+        }
+        else{
+            result = 9 - stack.getFirst();
+            result = result * (int)(Math.pow(10, (stack.size() -1)));
+            return result;
+        }
+    }
+
+
+
+    public static void main(String[] args) {
+
+
+        A_Minus_B AMINB = new A_Minus_B();
+        int bill;
+        int paid;
+        Scanner keyboard = new Scanner(System.in);
+
+
+        while(true) {
+            System.out.println("Please input the bill: $");
+            bill = keyboard.nextInt();
+            System.out.println("Please input the amount paid: $");
+            paid = keyboard.nextInt();
+
+            if (bill == 0 && paid == 0) {
+                System.out.println("End of Input");
+                return;
+            } else {
+                int result = AMINB.Minus1(bill, paid);
+                if (result == 0) {
+                    System.out.println("Bill: "+ bill + ", Paid: "+ paid + ", You are potentially losing: $" + 0);
+                } else {
+                    System.out.println("Bill: "+ bill + ", Paid: "+ paid +  ", You are potentially losing: $" + result);
+                }
+            }
+        }
+    }
+}
